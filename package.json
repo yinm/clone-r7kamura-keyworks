@@ -1,0 +1,53 @@
+{
+  "dependencies": {
+    "key-string": "0.2.5",
+    "node-reset-scss": "^1.0.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.0",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-transform-class-properties": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "css-loader": "^0.25.0",
+    "eslint": "^3.9.1",
+    "eslint-plugin-react": "^6.6.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "fixpack": "^2.3.1",
+    "node-sass": "^3.11.2",
+    "postcss-loader": "^1.1.0",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.3"
+  },
+  "name": "clone-r7kamura-keyworks",
+  "version": "1.0.0",
+  "description": "Clone [yinm/clone-r7kamura-keyworks](https://github.com/yinm/clone-r7kamura-keyworks) for study.",
+  "main": "index.js",
+  "scripts": {
+    "build": "yarn run build:clean && yarn run build:copy && yarn run build:webpack",
+    "build:clean": "rm -rf ./dist || true && mkdir -p ./dist",
+    "build:copy": "cp -r ./src/_locales ./src/html ./src/images ./src/manifest.json ./dist",
+    "build:webpack": "webpack --config webpack.config.js --display-error-details",
+    "lint": "yarn run lint:eslint && yarn run lint:fixpack",
+    "lint:eslint": "eslint 'src/**/*.{js,jsx}'",
+    "lint:fixpack": "fixpack && fixpack src/manifest.json",
+    "test": "yarn run lint && yarn run build",
+    "watch": "webpack --config webpack.config.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yinm/clone-r7kamura-keyworks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yinm/clone-r7kamura-keyworks/issues"
+  },
+  "homepage": "https://github.com/yinm/clone-r7kamura-keyworks#readme"
+}
