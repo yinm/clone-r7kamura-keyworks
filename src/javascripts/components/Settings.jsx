@@ -26,3 +26,155 @@ class Action extends React.Component {
     )
   }
 }
+
+export default class Settings extends React.Component {
+  constructor() {
+    super()
+    this.state = this.getInitialState()
+  }
+
+  componentDidMount() {
+    chrome.storage.sync.get('settings', ({ settings }) => {
+      this.setState({ settings })
+    })
+  }
+
+  getInitialState() {
+    return {
+      actionType: '',
+      keyString: '',
+      settings: {
+        actionDefinitions: {},
+      },
+      value: '',
+    }
+  }
+
+  onDeleteButtonClick(keyString) {
+    delete this.state.settings.actionDefinitions[keyString]
+    this.setState({ settings: this.state.settings })
+    chrome.storage.sync.set({ settings: this.state.settings })
+  }
+
+  onKeyDown(event) {
+    const keyString = detectKeyString(event)
+    if (!keyString.includes('unknown')) {
+      this.setState({ keyString })
+    }
+  }
+
+  onSubmit(event) {
+    event.preventDefault()
+    const settings = {
+      actionDefinitions: {
+        ...this.state.settings.actionDefinitions,
+        [this.state.keyString]: {
+          value: this.state.value,
+          type: this.state.actionType,
+        },
+      },
+    }
+
+    this.setState({
+      ...this.getInitialState(),
+      settings,
+    })
+    chrome.storage.sync.set({ settings })
+  }
+
+  render() {
+    return(
+      <div>
+        <header className="header">
+          <div className="section">
+            <div className="container">
+              <h1 className="header-heading">
+                Keyworks settings
+              </h1>
+            </div>
+          </div>
+        </header>
+
+        <main className="main">
+          <div className="section">
+            <div className="container">
+              <section className="card">
+                <table className="table">
+                  <tbody>
+                    {
+                      Object.keys(this.state.settings.actionDefinitions).map((keyString) => {
+                        return(
+                          <Action
+                            actionDefinition={this.state.settings.actionDefinitions[keyString]}
+                            key={keyString}
+                            keyString={keyString}
+                            onDeleteButtonClick={this.onDeleteButtonClick.bind(this)}
+                          />
+                        )
+                      })
+                    }
+                  </tbody>
+                </table>
+              </section>
+
+              <section className="card">
+                <div className="card-body">
+                  <form onSubmit={this.onSubmit.bind(this)}>
+                    <div className="form-group">
+                      <label>
+                        <div className="form-label">
+                          Key
+                        </div>
+                        <input type="text" onKeyDown={this.onKeyDown.bind(this)} value={this.state.keyString} className="form-control" required />
+                      </label>
+                    </div>
+
+                    <div className="form-group">
+                      <label>
+                        <div className="form-label">
+                          Action
+                        </div>
+                        <div className="form-select-container">
+                          <select className="form-control" value={this.state.actionType} onChange={(event) => { this.setState({ actionType: event.target.value }) }} required>
+                            <option value=""></option>
+                            {
+                              Object.keys(actions).map((actionType) => {
+                                return(
+                                  <option value={ actionType }>
+                                    { actionType }
+                                  </option>
+                                )
+                              })
+                            }
+                          </select>
+                        </div>
+                      </label>
+                    </div>
+
+                    { actions[this.state.actionType] && actions[this.state.actionType].hasValue &&
+                      <div className="form-group">
+                        <label>
+                          <div className="form-label">
+                            value
+                          </div>
+                          <textarea className="form-control" value={this.state.value} onChange={(event) => { this.setState({ value: event.target.value }) }} required/>
+                        </label>
+                        <div className="form-note">
+                          {"${title} and ${url} variables are available."}
+                        </div>
+                      </div>
+                    }
+
+                    <div className="form-group">
+                      <input className="button button-primary" type="submit" value="Add" />
+                    </div>
+                  </form>
+                </div>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+    )
+  }
+}
