@@ -1,1 +1,1 @@
-Clone [yinm/clone-r7kamura-keyworks](https://github.com/yinm/clone-r7kamura-keyworks) for study.
+Clone [r7kamura/keyworks: A web browser extension to customize keyboard shortcuts.](https://github.com/r7kamura/keyworks) for study.
