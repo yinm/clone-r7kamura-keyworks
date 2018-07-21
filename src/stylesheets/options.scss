@@ -1,0 +1,106 @@
+@import "~node-reset-scss/scss/reset";
+@import "./variables";
+@import "./blocks/button";
+@import "./blocks/form";
+@import "./blocks/table";
+
+$width-screen-small-minimum: 767px;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f4f4f4;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: "Noto Sans Japanese", YuGothic, "メイリオ", meiryo, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  word-wrap: break-word;
+}
+
+kbd {
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
+  color: #333;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+  margin: 0 0.1em;
+  padding: 0.1em 0.6em;
+  text-shadow: 0 1px 0 #fff;
+  white-space: nowrap;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+  margin-bottom: 24px;
+
+  &-body,
+  &-footer,
+  &-header,
+  &-transparent {
+    padding: 24px 16px;
+
+    @media (min-width: &width-screen-small-minimum) {
+      padding: 32px;
+    }
+  }
+
+  &-body + &-body,
+  &-header + &-body {
+    padding-top: 0;
+  }
+
+  &-body + &-footer {
+    padding-top: 0;
+  }
+
+  &-description {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 0.9rem;
+  }
+
+  &-heading {
+    font-size: 1.2rem;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.footer {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.header {
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+
+  &-heading {
+    font-size: 24px;
+  }
+}
+
+.section {
+  padding-bottom: 32px;
+  padding-top: 32px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
