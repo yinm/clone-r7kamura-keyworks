@@ -11,7 +11,7 @@ class Action extends React.Component {
     return(
       <tr>
         <td>
-          <kdd>{ this.props.keyString }</kdd>
+          <kbd>{ this.props.keyString }</kbd>
         </td>
         <td>
           { this.props.actionDefinition.type }
